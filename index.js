@@ -1,6 +1,8 @@
 const express = require("express");
 const { connection } = require("./config/db");
 const { userRouter } = require("./routes/UserRoutes");
+const { bookRouter } = require("./routes/BookRoutes");
+const { authenticator } = require("./middlewares/authenticator");
 
 require("dotenv").config();
 
@@ -9,6 +11,9 @@ app.use(express.json());
 
 //user
 app.use("/api", userRouter);
+
+//Books
+app.use("/api", authenticator, bookRouter);
 
 app.listen(process.env.PORT, async () => {
   try {
